@@ -12,7 +12,7 @@ namespace EFCoreGalvanize
             var database = new DatabaseContext();
 
             //write list of student names
-            database.Students.ToList().ForEach(student => Console.WriteLine(student.FirstName));
+            database.Students.ToList().ForEach(student => Console.WriteLine($"{student.FirstName} {student.LastName}"));
 
             //given a student name, show their grades
             const string name1 = "Robert";
