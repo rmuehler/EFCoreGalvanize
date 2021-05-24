@@ -48,8 +48,19 @@ namespace EFCoreGalvanize
 
             //number of freshmen
             var freshmenCount = database.Students
-                .Select(student => student.Classification).Count(classification => classification.Equals(Student.Class.Freshman));
+                .Select(student => student.Classification)
+                .Count(classification => classification.Equals(Student.Class.Freshman));
             Console.Out.WriteLine($"\nThere are {freshmenCount} Freshmen!");
+
+            //average grade for all sophomores
+            var sophomoreAverages = database.Students.Include(student => student.Grades).Select(student =>
+                new
+                {
+                    Name = student.FirstName, Average = student.Grades.Average(grade => grade.Score),
+                    Classification = student.Classification
+                }).Where(student => student.Classification.Equals(Student.Class.Sophomore)).ToList();
+            Console.Out.WriteLine("\nSophomores and their average grades: ");
+            sophomoreAverages.ForEach(student => Console.WriteLine($"{student.Name} is a {student.Classification} with an average of {student.Average}."));
         }
     }
 }
