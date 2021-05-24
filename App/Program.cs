@@ -30,7 +30,13 @@ namespace EFCoreGalvanize
             float average = student2.Grades.Average(grade => grade.Score);
             Console.Out.WriteLine($"{student2.FirstName}'s average score is {average}.");
 
-             
+            //student with the highest score
+            var studentByAveragesDesc = database.Students.Include(student => student.Grades).Select(student => student)
+                .OrderByDescending(student => student.Grades.Average(grade => grade.Score));
+            Console.Out.WriteLine(
+                $"\nThe student with the highest average is : {studentByAveragesDesc.First().FirstName}");
+
+            //student with the highest # of courses
             
         }
     }
