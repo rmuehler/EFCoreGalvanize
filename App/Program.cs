@@ -45,6 +45,11 @@ namespace EFCoreGalvanize
             var studentWithNoCourses = database.Students.Include(student => student.Grades)
                 .FirstOrDefault(student => student.Grades.Count.Equals(0));
             Console.Out.WriteLine($"\n{studentWithNoCourses.FirstName} is taking no courses!");
+
+            //number of freshmen
+            var freshmenCount = database.Students
+                .Select(student => student.Classification).Count(classification => classification.Equals(Student.Class.Freshman));
+            Console.Out.WriteLine($"\nThere are {freshmenCount} Freshmen!");
         }
     }
 }
