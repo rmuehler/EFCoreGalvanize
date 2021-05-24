@@ -40,6 +40,11 @@ namespace EFCoreGalvanize
                 .OrderByDescending(student => student.Grades.Count);
             Console.Out.WriteLine(
                 $"\nThe student with the most number of courses is: {studentByNumCoursesDesc.First().FirstName}");
+
+            //student with no courses
+            var studentWithNoCourses = database.Students.Include(student => student.Grades)
+                .FirstOrDefault(student => student.Grades.Count.Equals(0));
+            Console.Out.WriteLine($"\n{studentWithNoCourses.FirstName} is taking no courses!");
         }
     }
 }
